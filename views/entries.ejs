@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Form Responses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Form Responses</h1>
+
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search by name or email">
+        <button onclick="searchEntries()">Search</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Looker (%)</th>
+                <th>Listener (%)</th>
+                <th>Talker (%)</th>
+                <th>Toucher (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% entries.forEach(function(entry) { %>
+                <tr>
+                    <td>
+                        <%= entry.name %>
+                    </td>
+                    <td>
+                        <%= entry.email %>
+                    </td>
+                    <td>
+                        <%= entry.characterScores.looker %>
+                    </td>
+                    <td>
+                        <%= entry.characterScores.listener %>
+                    </td>
+                    <td>
+                        <%= entry.characterScores.talker %>
+                    </td>
+                    <td>
+                        <%= entry.characterScores.toucher %>
+                    </td>
+                </tr>
+                <% }); %>
+        </tbody>
+    </table>
+
+    <script>
+        function searchEntries() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("search-input");
+            filter = input.value.toUpperCase();
+            table = document.querySelector("table");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
